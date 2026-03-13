@@ -28,6 +28,9 @@ const projects = [
       '/assets/images/gallery/hris/1.png',
       '/assets/images/gallery/hris/2.png',
       '/assets/images/gallery/hris/3.png',
+      '/assets/images/gallery/hris/4.png',
+      '/assets/images/gallery/hris/5.png',
+      '/assets/images/gallery/hris/6.png',
     ],
   },
   {
@@ -42,9 +45,7 @@ const projects = [
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
     gallery: [
-      '/assets/images/gallery/payroll/1.png',
-      '/assets/images/gallery/payroll/2.png',
-      '/assets/images/gallery/payroll/3.png',
+      
     ],
   },
   {
@@ -59,8 +60,11 @@ const projects = [
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
     gallery: [
-      '/assets/images/gallery/ticket/1.png',
-      '/assets/images/gallery/ticket/2.png',
+      '/assets/images/gallery/payroll/1.png',
+      '/assets/images/gallery/payroll/2.png',
+      '/assets/images/gallery/payroll/3.png',
+      '/assets/images/gallery/payroll/4.png',
+      '/assets/images/gallery/payroll/5.png',
     ],
   },
   {
@@ -75,11 +79,10 @@ const projects = [
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
     gallery: [
-      '/assets/images/gallery/foodcostingandpos/1.png',
-      '/assets/images/gallery/foodcostingandpos/2.png',
-      '/assets/images/gallery/foodcostingandpos/3.png',
-      '/assets/images/gallery/foodcostingandpos/4.png',
-      '/assets/images/gallery/foodcostingandpos/5.png',
+      '/assets/images/gallery/ticket/1.png',
+      '/assets/images/gallery/ticket/2.png',
+      '/assets/images/gallery/ticket/3.png',
+      '/assets/images/gallery/ticket/4.png',
     ],
   },
   {
@@ -94,9 +97,6 @@ const projects = [
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
     gallery: [
-      '/assets/images/gallery/seat mapping/1.png',
-      '/assets/images/gallery/seat mapping/2.png',
-      '/assets/images/gallery/seat mapping/3.png',
     ],
   },
   {
@@ -194,11 +194,23 @@ const projects = [
       'Built a food costing engine that breaks down recipes by ingredient, tracks market price fluctuations, calculates real-time margins per dish, and flags items falling below target profitability.',
     techStack: ['Laravel', 'React', 'MySQL'],
     featured: false,
+    gallery: [
+       '/assets/images/gallery/foodcostingandpos/1.png',
+      '/assets/images/gallery/foodcostingandpos/2.png',
+      '/assets/images/gallery/foodcostingandpos/3.png',
+      '/assets/images/gallery/foodcostingandpos/4.png',
+      '/assets/images/gallery/foodcostingandpos/5.png',
+      '/assets/images/gallery/foodcostingandpos/6.png',
+      '/assets/images/gallery/foodcostingandpos/7.png',
+      '/assets/images/gallery/foodcostingandpos/8.png',
+      '/assets/images/gallery/foodcostingandpos/9.png',
+    ],
   },
   {
     id: 15,
     title: 'Floor Mapping for Workspace',
     subtitle: 'Office Space Management',
+     
     image: '',
     problem:
       'Office space planning was done manually with printed floor plans. Seat assignments changed constantly, hot-desk availability was unknown, and HR had no occupancy data.',
@@ -206,6 +218,16 @@ const projects = [
       'Built an interactive floor map with drag-and-drop seat assignment, employee-to-seat linking, real-time occupancy visualization, department zone management, and capacity analytics.',
     techStack: ['React', 'Laravel', 'MySQL'],
     featured: false,
+    gallery: [
+       '/assets/images/gallery/seatmapping/1.png',
+      '/assets/images/gallery/seatmapping/2.png',
+      '/assets/images/gallery/seatmapping/3.png',
+      '/assets/images/gallery/seatmapping/4.png',
+      '/assets/images/gallery/seatmapping/5.png',
+      '/assets/images/gallery/seatmapping/6.png',
+      '/assets/images/gallery/seatmapping/7.png',
+      '/assets/images/gallery/seatmapping/8.png',
+    ]
   },
   {
     id: 16,
@@ -223,17 +245,21 @@ const projects = [
 
 export default function ProjectGrid() {
   const withBase = (path = '') => {
+    if (typeof path !== 'string') return ''
     if (!path) return ''
     if (/^(https?:)?\/\//.test(path) || path.startsWith('data:')) return path
+    if (path.startsWith(import.meta.env.BASE_URL)) return path
     const cleanPath = path.replace(/^\/+/, '')
     return `${import.meta.env.BASE_URL}${cleanPath}`
   }
 
   const normalizeProject = (project) => {
-    const normalizedGallery = (project.gallery || []).map(withBase)
+    const imageArray = Array.isArray(project.image) ? project.image : []
+    const imageValue = Array.isArray(project.image) ? project.image[0] : project.image
+    const normalizedGallery = [...(project.gallery || []), ...imageArray].map(withBase)
     return {
       ...project,
-      image: withBase(project.image || normalizedGallery[0] || ''),
+      image: imageValue ? withBase(imageValue) : (normalizedGallery[0] || ''),
       gallery: normalizedGallery,
     }
   }

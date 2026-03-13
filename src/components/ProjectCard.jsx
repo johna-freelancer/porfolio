@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ExternalLink, Github, AlertCircle, Lightbulb, ArrowRight } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { ExternalLink, Github, AlertCircle, Lightbulb, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const BADGE_COLORS = {
   Laravel: 'bg-red-900/40 text-red-300 border-red-700/40',
@@ -62,11 +62,18 @@ export default function ProjectCard({
 }) {
   const [activeTab, setActiveTab] = useState('problem')
   const heroImage = image || gallery[0] || ''
+  const galleryStripRef = useRef(null)
+  const modalThumbsRef = useRef(null)
 
 
   // Gallery modal state
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryIndex, setGalleryIndex] = useState(0)
+
+  const scrollGallery = (ref, direction) => {
+    if (!ref.current) return
+    ref.current.scrollBy({ left: direction * 180, behavior: 'smooth' })
+  }
 
   return (
     <article className={`group relative flex flex-col rounded-2xl overflow-hidden
@@ -105,22 +112,43 @@ export default function ProjectCard({
       {/* Gallery section */}
       {gallery && gallery.length > 0 && (
         <div className="px-6 pt-4 pb-2">
-          <div className="flex flex-wrap gap-2">
-            {gallery.slice(0, 6).map((img, idx) => (
+          <div className="relative">
+            {gallery.length > 4 && (
               <button
-                key={img}
-                className="focus:outline-none border-2 border-slate-800 hover:border-blue-500 rounded-lg overflow-hidden w-16 h-16 bg-slate-900"
-                onClick={() => { setGalleryIndex(idx); setGalleryOpen(true); }}
                 type="button"
-                tabIndex={0}
+                aria-label="Scroll thumbnails left"
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-slate-900/90 border border-slate-700 hover:border-blue-500 text-slate-200"
+                onClick={() => scrollGallery(galleryStripRef, -1)}
               >
-                <img src={img} alt={title + ' screenshot'} className="object-cover w-full h-full" loading="lazy" />
+                <ChevronLeft size={14} />
               </button>
-            ))}
+            )}
+
+            <div ref={galleryStripRef} className="flex gap-2 overflow-x-auto px-7 pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              {gallery.map((img, idx) => (
+                <button
+                  key={img}
+                  className="focus:outline-none border-2 border-slate-800 hover:border-blue-500 rounded-lg overflow-hidden w-16 h-16 bg-slate-900 flex-shrink-0"
+                  onClick={() => { setGalleryIndex(idx); setGalleryOpen(true); }}
+                  type="button"
+                  tabIndex={0}
+                >
+                  <img src={img} alt={title + ' screenshot'} className="object-cover w-full h-full" loading="lazy" />
+                </button>
+              ))}
+            </div>
+
+            {gallery.length > 4 && (
+              <button
+                type="button"
+                aria-label="Scroll thumbnails right"
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-slate-900/90 border border-slate-700 hover:border-blue-500 text-slate-200"
+                onClick={() => scrollGallery(galleryStripRef, 1)}
+              >
+                <ChevronRight size={14} />
+              </button>
+            )}
           </div>
-          {gallery.length > 6 && (
-            <span className="text-xs text-slate-500 ml-2">+{gallery.length - 6} more</span>
-          )}
         </div>
       )}
 
@@ -130,18 +158,42 @@ export default function ProjectCard({
           <div className="relative max-w-3xl w-full flex flex-col items-center" onClick={e => e.stopPropagation()}>
             <button className="absolute top-2 right-2 text-white bg-slate-900/80 rounded-full p-2 hover:bg-blue-500/80" onClick={() => setGalleryOpen(false)}>&times;</button>
             <img src={gallery[galleryIndex]} alt={title + ' screenshot'} className="max-h-[70vh] rounded-xl shadow-2xl border-4 border-blue-500/20" />
-            <div className="flex gap-2 mt-4">
-              {gallery.map((img, idx) => (
+            <div className="relative w-full mt-4 px-8">
+              {gallery.length > 6 && (
                 <button
-                  key={img}
-                  className={`w-10 h-10 rounded border-2 ${idx === galleryIndex ? 'border-blue-500' : 'border-slate-700'} overflow-hidden`}
-                  onClick={() => setGalleryIndex(idx)}
                   type="button"
-                  tabIndex={0}
+                  aria-label="Scroll modal thumbnails left"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-slate-900/90 border border-slate-700 hover:border-blue-500 text-slate-200"
+                  onClick={() => scrollGallery(modalThumbsRef, -1)}
                 >
-                  <img src={img} alt={title + ' thumb'} className="object-cover w-full h-full" />
+                  <ChevronLeft size={14} />
                 </button>
-              ))}
+              )}
+
+              <div ref={modalThumbsRef} className="flex gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                {gallery.map((img, idx) => (
+                  <button
+                    key={img}
+                    className={`w-10 h-10 rounded border-2 ${idx === galleryIndex ? 'border-blue-500' : 'border-slate-700'} overflow-hidden flex-shrink-0`}
+                    onClick={() => setGalleryIndex(idx)}
+                    type="button"
+                    tabIndex={0}
+                  >
+                    <img src={img} alt={title + ' thumb'} className="object-cover w-full h-full" />
+                  </button>
+                ))}
+              </div>
+
+              {gallery.length > 6 && (
+                <button
+                  type="button"
+                  aria-label="Scroll modal thumbnails right"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-slate-900/90 border border-slate-700 hover:border-blue-500 text-slate-200"
+                  onClick={() => scrollGallery(modalThumbsRef, 1)}
+                >
+                  <ChevronRight size={14} />
+                </button>
+              )}
             </div>
           </div>
         </div>

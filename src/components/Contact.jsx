@@ -30,8 +30,7 @@ export default function Contact() {
             Let's Build Together
           </h2>
           <p className="text-slate-400 max-w-xl text-lg">
-            Especially interested in medical sector inquiries, enterprise portal projects,
-            and AI automation engagements.
+            Especially interested in enterprise portal projects, AI automation engagements, and innovative digital solutions for organizations of any sector.
           </p>
         </div>
 
@@ -40,7 +39,7 @@ export default function Contact() {
           <div className="lg:col-span-2 space-y-6">
             {[
               { icon: Mail, label: 'Email', value: 'jadalmario.freelancer@gmail.com', href: 'mailto:jadalmario.freelancer@gmail.com' },
-              { icon: MapPin, label: 'Location', value: 'Philippines · GMT+8', href: null },
+              { icon: MapPin, label: 'Location', value: 'Mabalacat, Philippines · GMT+8', href: null },
               { icon: Clock, label: 'Response Time', value: 'Within 24 hours', href: null },
             ].map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="flex items-center gap-4 group">
