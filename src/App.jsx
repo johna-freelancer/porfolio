@@ -2,7 +2,6 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import ProjectGrid from './components/ProjectGrid'
 import TechStack from './components/TechStack'
-import MedicalStrategy from './components/MedicalStrategy'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
@@ -26,16 +25,6 @@ export default function App() {
         </div>
 
         <TechStack />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-700/30 to-transparent" />
-        </div>
-
-        <MedicalStrategy />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-slate-700/60 to-transparent" />
-        </div>
 
         <Contact />
       </main>
