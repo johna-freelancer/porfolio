@@ -1,4 +1,4 @@
-import { Github, Linkedin, Heart, Layers } from 'lucide-react'
+import { Heart, Layers } from 'lucide-react'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -19,17 +19,6 @@ export default function Footer() {
             </span>
           </div>
 
-          {/* Social */}
-          <div className="flex items-center gap-4">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-               className="text-slate-500 hover:text-blue-400 transition-colors duration-200">
-              <Github size={18} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-               className="text-slate-500 hover:text-blue-400 transition-colors duration-200">
-              <Linkedin size={18} />
-            </a>
-          </div>
 
           {/* Copyright */}
           <p className="text-slate-600 text-sm flex items-center gap-1.5">

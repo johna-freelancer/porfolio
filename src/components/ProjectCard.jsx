@@ -58,8 +58,15 @@ export default function ProjectCard({
   githubUrl,
   accentColor = 'blue',
   featured = false,
+  gallery = [],
 }) {
   const [activeTab, setActiveTab] = useState('problem')
+  const heroImage = image || gallery[0] || ''
+
+
+  // Gallery modal state
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const [galleryIndex, setGalleryIndex] = useState(0)
 
   return (
     <article className={`group relative flex flex-col rounded-2xl overflow-hidden
@@ -77,43 +84,68 @@ export default function ProjectCard({
 
       {/* Image container with zoom-on-hover */}
       <div className="relative h-52 overflow-hidden bg-slate-800 flex-shrink-0">
-        {image ? (
+        {heroImage && (
           <img
-            src={image}
+            src={heroImage}
             alt={imageAlt || title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out
-                       group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             loading="lazy"
           />
-        ) : (
-          /* Gradient placeholder — replace with real screenshot later */
-          <div className="w-full h-full bg-gradient-to-br from-slate-800 via-blue-950/50 to-slate-900
-                          transition-transform duration-700 ease-out group-hover:scale-110
-                          flex items-center justify-center">
-            <div className="text-center space-y-2 opacity-40">
-              <div className="w-16 h-16 mx-auto border-2 border-blue-500/40 rounded-xl
-                              flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round"
-                        d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                </svg>
-              </div>
-              <p className="text-slate-400 text-xs font-mono">screenshot</p>
-            </div>
-          </div>
         )}
-
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-
         {/* Subtitle chip */}
         <div className="absolute bottom-3 left-4">
-          <span className="font-mono text-xs text-blue-300/80 bg-slate-900/60 backdrop-blur-sm
-                           px-2 py-0.5 rounded border border-blue-500/20">
+          <span className="font-mono text-xs text-blue-300/80 bg-slate-900/60 backdrop-blur-sm px-2 py-0.5 rounded border border-blue-500/20">
             {subtitle}
           </span>
         </div>
       </div>
+
+      {/* Gallery section */}
+      {gallery && gallery.length > 0 && (
+        <div className="px-6 pt-4 pb-2">
+          <div className="flex flex-wrap gap-2">
+            {gallery.slice(0, 6).map((img, idx) => (
+              <button
+                key={img}
+                className="focus:outline-none border-2 border-slate-800 hover:border-blue-500 rounded-lg overflow-hidden w-16 h-16 bg-slate-900"
+                onClick={() => { setGalleryIndex(idx); setGalleryOpen(true); }}
+                type="button"
+                tabIndex={0}
+              >
+                <img src={img} alt={title + ' screenshot'} className="object-cover w-full h-full" loading="lazy" />
+              </button>
+            ))}
+          </div>
+          {gallery.length > 6 && (
+            <span className="text-xs text-slate-500 ml-2">+{gallery.length - 6} more</span>
+          )}
+        </div>
+      )}
+
+      {/* Gallery modal */}
+      {galleryOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setGalleryOpen(false)}>
+          <div className="relative max-w-3xl w-full flex flex-col items-center" onClick={e => e.stopPropagation()}>
+            <button className="absolute top-2 right-2 text-white bg-slate-900/80 rounded-full p-2 hover:bg-blue-500/80" onClick={() => setGalleryOpen(false)}>&times;</button>
+            <img src={gallery[galleryIndex]} alt={title + ' screenshot'} className="max-h-[70vh] rounded-xl shadow-2xl border-4 border-blue-500/20" />
+            <div className="flex gap-2 mt-4">
+              {gallery.map((img, idx) => (
+                <button
+                  key={img}
+                  className={`w-10 h-10 rounded border-2 ${idx === galleryIndex ? 'border-blue-500' : 'border-slate-700'} overflow-hidden`}
+                  onClick={() => setGalleryIndex(idx)}
+                  type="button"
+                  tabIndex={0}
+                >
+                  <img src={img} alt={title + ' thumb'} className="object-cover w-full h-full" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Card body */}
       <div className="flex flex-col flex-1 p-6 space-y-5">

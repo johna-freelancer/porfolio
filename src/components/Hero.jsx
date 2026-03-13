@@ -1,4 +1,4 @@
-import { ArrowRight, Shield, Layers, Cpu, Github, Linkedin, Mail, Terminal } from 'lucide-react'
+import { ArrowRight, Shield, Layers, Cpu, Mail, Terminal } from 'lucide-react'
 
 const stats = [
   { label: 'Years Experience', value: '5+' },
@@ -71,18 +71,10 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Social links */}
+            {/* Contact info */}
             <div className="flex items-center gap-4 pt-2">
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                 className="text-slate-500 hover:text-blue-400 transition-colors duration-200">
-                <Github size={20} />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                 className="text-slate-500 hover:text-blue-400 transition-colors duration-200">
-                <Linkedin size={20} />
-              </a>
-              <div className="h-px w-16 bg-slate-700" />
-              <span className="text-slate-500 text-sm font-mono">anthony@clarkoutsourcing</span>
+              <Mail size={16} className="text-blue-400" />
+              <span className="text-slate-400 text-sm font-mono">jadalmario.freelancer@gmail.com</span>
             </div>
           </div>
 

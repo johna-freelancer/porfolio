@@ -1,4 +1,4 @@
-import { Mail, MessageSquare, Linkedin, Github, MapPin, Clock, Send } from 'lucide-react'
+import { Mail, MessageSquare, MapPin, Clock, Send } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Contact() {
@@ -39,9 +39,7 @@ export default function Contact() {
           {/* Info column */}
           <div className="lg:col-span-2 space-y-6">
             {[
-              { icon: Mail, label: 'Email', value: 'anthony@clarkoutsourcing.com', href: 'mailto:anthony@clarkoutsourcing.com' },
-              { icon: Linkedin, label: 'LinkedIn', value: '/in/anthonyclark', href: 'https://linkedin.com' },
-              { icon: Github, label: 'GitHub', value: 'github.com/anthonyclark', href: 'https://github.com' },
+              { icon: Mail, label: 'Email', value: 'jadalmario.freelancer@gmail.com', href: 'mailto:jadalmario.freelancer@gmail.com' },
               { icon: MapPin, label: 'Location', value: 'Philippines · GMT+8', href: null },
               { icon: Clock, label: 'Response Time', value: 'Within 24 hours', href: null },
             ].map(({ icon: Icon, label, value, href }) => (

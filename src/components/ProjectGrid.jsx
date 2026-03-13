@@ -24,6 +24,11 @@ const projects = [
       'Built a centralized HRIS with employee profiles, attendance tracking, leave management, org chart visualization, and exportable compliance reports — eliminating manual HR data work.',
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
+    gallery: [
+      '/assets/images/gallery/hris/1.png',
+      '/assets/images/gallery/hris/2.png',
+      '/assets/images/gallery/hris/3.png',
+    ],
   },
   {
     id: 3,
@@ -36,6 +41,11 @@ const projects = [
       'Digitized the full onboarding pipeline with automated checklists, document upload and e-signature, multi-department task assignment, and a real-time progress dashboard for HR.',
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
+    gallery: [
+      '/assets/images/gallery/payroll/1.png',
+      '/assets/images/gallery/payroll/2.png',
+      '/assets/images/gallery/payroll/3.png',
+    ],
   },
   {
     id: 4,
@@ -48,6 +58,10 @@ const projects = [
       'Built an automated payroll engine with configurable salary structures, tax and deduction computation, payslip generation, bank file exports, and a full immutable audit trail per run.',
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
+    gallery: [
+      '/assets/images/gallery/ticket/1.png',
+      '/assets/images/gallery/ticket/2.png',
+    ],
   },
   {
     id: 5,
@@ -60,6 +74,13 @@ const projects = [
       'Built a full ticketing platform with priority-based queues, SLA countdown timers, agent assignment, escalation rules, and a manager dashboard showing resolution KPIs in real time.',
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
+    gallery: [
+      '/assets/images/gallery/foodcostingandpos/1.png',
+      '/assets/images/gallery/foodcostingandpos/2.png',
+      '/assets/images/gallery/foodcostingandpos/3.png',
+      '/assets/images/gallery/foodcostingandpos/4.png',
+      '/assets/images/gallery/foodcostingandpos/5.png',
+    ],
   },
   {
     id: 6,
@@ -72,6 +93,11 @@ const projects = [
       'Built a CRM with visual lead pipelines, client interaction history, follow-up scheduling, deal stage tracking, and a sales funnel dashboard accessible to both reps and managers.',
     techStack: ['Laravel', 'Angular', 'MySQL'],
     featured: false,
+    gallery: [
+      '/assets/images/gallery/seat mapping/1.png',
+      '/assets/images/gallery/seat mapping/2.png',
+      '/assets/images/gallery/seat mapping/3.png',
+    ],
   },
   {
     id: 7,
@@ -196,6 +222,22 @@ const projects = [
 ]
 
 export default function ProjectGrid() {
+  const withBase = (path = '') => {
+    if (!path) return ''
+    if (/^(https?:)?\/\//.test(path) || path.startsWith('data:')) return path
+    const cleanPath = path.replace(/^\/+/, '')
+    return `${import.meta.env.BASE_URL}${cleanPath}`
+  }
+
+  const normalizeProject = (project) => {
+    const normalizedGallery = (project.gallery || []).map(withBase)
+    return {
+      ...project,
+      image: withBase(project.image || normalizedGallery[0] || ''),
+      gallery: normalizedGallery,
+    }
+  }
+
   return (
     <section id="projects" className="relative py-28 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -215,18 +257,20 @@ export default function ProjectGrid() {
         <div className="mb-8">
           {projects
             .filter((p) => p.featured)
-            .map((project) => (
-              <ProjectCard key={project.id} {...project} />
-            ))}
+            .map((project) => {
+              const normalizedProject = normalizeProject(project)
+              return <ProjectCard key={project.id} {...normalizedProject} />
+            })}
         </div>
 
         {/* All projects grid */}
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
           {projects
             .filter((p) => !p.featured)
-            .map((project) => (
-              <ProjectCard key={project.id} {...project} />
-            ))}
+            .map((project) => {
+              const normalizedProject = normalizeProject(project)
+              return <ProjectCard key={project.id} {...normalizedProject} />
+            })}
         </div>
       </div>
     </section>
