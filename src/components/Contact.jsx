@@ -1,4 +1,5 @@
 import { Mail, MessageSquare, MapPin, Clock, Send } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 import { useState } from 'react'
 
 export default function Contact() {
@@ -11,8 +12,24 @@ export default function Contact() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    // In production: replace with your form backend (Formspree, EmailJS, etc.)
-    setSubmitted(true)
+    // Replace these with your actual EmailJS service, template, and public key
+    const serviceId = 'service_ps6eqke';
+    const templateId = 'template_so9siyp';
+    const publicKey = '2IiWxcX2SQiNoPRAz';
+
+    emailjs.send(serviceId, templateId, {
+      from_name: form.name,
+      from_email: form.email,
+      message: form.message,
+      project_type: form.budget,
+    }, publicKey)
+      .then(() => {
+        setSubmitted(true)
+      })
+      .catch((error) => {
+        alert('Failed to send message. Please try again later.')
+        console.error('EmailJS error:', error)
+      })
   }
 
   return (
