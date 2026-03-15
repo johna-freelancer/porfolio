@@ -15,7 +15,7 @@ export default function Footer() {
               AC<span className="text-blue-400">.</span>dev
             </span>
             <span className="text-slate-600 text-sm ml-2">
-              Software Development Lead · Clarkoutsourcing
+              Custom Business Systems for Growing Teams
             </span>
           </div>
 
@@ -24,7 +24,7 @@ export default function Footer() {
           <p className="text-slate-600 text-sm flex items-center gap-1.5">
             © {year} — Built with
             <Heart size={12} className="text-red-500 fill-red-500" />
-            React + Tailwind
+            care for business operations
           </p>
         </div>
       </div>

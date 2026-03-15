@@ -4,7 +4,7 @@ import { Menu, X, Layers, ExternalLink } from 'lucide-react'
 const navItems = [
   { label: 'Home', href: '#home' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
+  { label: 'How I Help', href: '#skills' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -50,7 +50,7 @@ export default function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <a href="#contact" className="btn-primary text-sm py-2">
-              Hire Me
+              Discuss Your Project
               <ExternalLink size={13} />
             </a>
           </div>
@@ -74,7 +74,7 @@ export default function Navbar() {
               </a>
             ))}
             <a href="#contact" className="btn-primary w-full justify-center mt-3 text-sm">
-              Hire Me
+              Discuss Your Project
             </a>
           </div>
         )}

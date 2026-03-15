@@ -47,7 +47,7 @@ export default function Contact() {
             Let's Build Together
           </h2>
           <p className="text-slate-400 max-w-xl text-lg">
-            Especially interested in enterprise portal projects, AI automation engagements, and innovative digital solutions for organizations of any sector.
+            Tell me the bottleneck in your operations and I will help you design the right system to solve it.
           </p>
         </div>
 
@@ -90,7 +90,7 @@ export default function Contact() {
                     <Send size={24} className="text-emerald-400" />
                   </div>
                   <h3 className="text-xl font-bold text-white">Message Sent!</h3>
-                  <p className="text-slate-400">I'll get back to you within 24 hours.</p>
+                  <p className="text-slate-400">Thanks for reaching out. I will reply within 24 hours.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -145,10 +145,11 @@ export default function Contact() {
                                  transition-colors duration-200"
                     >
                       <option value="">Select project type…</option>
-                      <option>Medical Results Platform</option>
-                      <option>Enterprise Ecosystem Portal</option>
-                      <option>AI Agent Integration</option>
-                      <option>HRIS / Payroll System</option>
+                      <option>POS / Sales Operations</option>
+                      <option>Food Costing / Restaurant Workflow</option>
+                      <option>Finance Reporting / Accounting Process</option>
+                      <option>HR / Payroll / Employee Management</option>
+                      <option>Support / Ticketing / Internal Workflow</option>
                       <option>Other</option>
                     </select>
                   </div>
@@ -163,7 +164,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      placeholder="Describe your project — what problem are you solving?"
+                      placeholder="What process is slow, manual, or causing problems today?"
                       className="w-full bg-slate-800/60 border border-slate-700/60 rounded-lg px-4 py-3
                                  text-sm text-slate-200 placeholder-slate-600 resize-none
                                  focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/30
@@ -173,7 +174,7 @@ export default function Contact() {
 
                   <button type="submit" className="btn-primary w-full justify-center">
                     <Send size={15} />
-                    Send Message
+                    Request a Project Consultation
                   </button>
                 </form>
               )}

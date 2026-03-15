@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { ExternalLink, Github, AlertCircle, Lightbulb, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ExternalLink, Github, AlertCircle, Lightbulb, ArrowRight, ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 
 const BADGE_COLORS = {
   Laravel: 'bg-red-900/40 text-red-300 border-red-700/40',
@@ -61,6 +61,8 @@ export default function ProjectCard({
   gallery = [],
 }) {
   const [activeTab, setActiveTab] = useState('problem')
+  const [heroImageFailed, setHeroImageFailed] = useState(false)
+  const [failedGallery, setFailedGallery] = useState({})
   const heroImage = image || gallery[0] || ''
   const galleryStripRef = useRef(null)
   const modalThumbsRef = useRef(null)
@@ -69,6 +71,13 @@ export default function ProjectCard({
   // Gallery modal state
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [galleryIndex, setGalleryIndex] = useState(0)
+
+  const markGalleryImageAsFailed = (index) => {
+    setFailedGallery((prev) => {
+      if (prev[index]) return prev
+      return { ...prev, [index]: true }
+    })
+  }
 
   const scrollGallery = (ref, direction) => {
     if (!ref.current) return
@@ -91,13 +100,21 @@ export default function ProjectCard({
 
       {/* Image container with zoom-on-hover */}
       <div className="relative h-52 overflow-hidden bg-slate-800 flex-shrink-0">
-        {heroImage && (
+        {heroImage && !heroImageFailed ? (
           <img
             src={heroImage}
             alt={imageAlt || title}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
             loading="lazy"
+            onError={() => setHeroImageFailed(true)}
           />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 text-slate-400">
+            <div className="flex flex-col items-center gap-2 text-center px-4">
+              <ImageOff size={24} className="text-slate-500" />
+              <p className="text-xs font-mono uppercase tracking-wider">Preview Coming Soon</p>
+            </div>
+          </div>
         )}
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
@@ -127,13 +144,25 @@ export default function ProjectCard({
             <div ref={galleryStripRef} className="flex gap-2 overflow-x-auto px-7 pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {gallery.map((img, idx) => (
                 <button
-                  key={img}
+                  key={`${img}-${idx}`}
                   className="focus:outline-none border-2 border-slate-800 hover:border-blue-500 rounded-lg overflow-hidden w-16 h-16 bg-slate-900 flex-shrink-0"
                   onClick={() => { setGalleryIndex(idx); setGalleryOpen(true); }}
                   type="button"
                   tabIndex={0}
                 >
-                  <img src={img} alt={title + ' screenshot'} className="object-cover w-full h-full" loading="lazy" />
+                  {failedGallery[idx] ? (
+                    <span className="w-full h-full flex items-center justify-center text-slate-500">
+                      <ImageOff size={14} />
+                    </span>
+                  ) : (
+                    <img
+                      src={img}
+                      alt={title + ' screenshot'}
+                      className="object-cover w-full h-full"
+                      loading="lazy"
+                      onError={() => markGalleryImageAsFailed(idx)}
+                    />
+                  )}
                 </button>
               ))}
             </div>
@@ -157,7 +186,21 @@ export default function ProjectCard({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setGalleryOpen(false)}>
           <div className="relative max-w-3xl w-full flex flex-col items-center" onClick={e => e.stopPropagation()}>
             <button className="absolute top-2 right-2 text-white bg-slate-900/80 rounded-full p-2 hover:bg-blue-500/80" onClick={() => setGalleryOpen(false)}>&times;</button>
-            <img src={gallery[galleryIndex]} alt={title + ' screenshot'} className="max-h-[70vh] rounded-xl shadow-2xl border-4 border-blue-500/20" />
+            {failedGallery[galleryIndex] ? (
+              <div className="w-full max-w-3xl h-[50vh] rounded-xl shadow-2xl border-4 border-blue-500/20 bg-slate-900 flex items-center justify-center text-slate-400">
+                <div className="flex flex-col items-center gap-2 text-center px-6">
+                  <ImageOff size={28} className="text-slate-500" />
+                  <p className="text-sm font-mono uppercase tracking-wider">Screenshot Not Available Yet</p>
+                </div>
+              </div>
+            ) : (
+              <img
+                src={gallery[galleryIndex]}
+                alt={title + ' screenshot'}
+                className="max-h-[70vh] rounded-xl shadow-2xl border-4 border-blue-500/20"
+                onError={() => markGalleryImageAsFailed(galleryIndex)}
+              />
+            )}
             <div className="relative w-full mt-4 px-8">
               {gallery.length > 6 && (
                 <button
@@ -173,13 +216,24 @@ export default function ProjectCard({
               <div ref={modalThumbsRef} className="flex gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                 {gallery.map((img, idx) => (
                   <button
-                    key={img}
+                    key={`${img}-${idx}`}
                     className={`w-10 h-10 rounded border-2 ${idx === galleryIndex ? 'border-blue-500' : 'border-slate-700'} overflow-hidden flex-shrink-0`}
                     onClick={() => setGalleryIndex(idx)}
                     type="button"
                     tabIndex={0}
                   >
-                    <img src={img} alt={title + ' thumb'} className="object-cover w-full h-full" />
+                    {failedGallery[idx] ? (
+                      <span className="w-full h-full flex items-center justify-center text-slate-500 bg-slate-900">
+                        <ImageOff size={12} />
+                      </span>
+                    ) : (
+                      <img
+                        src={img}
+                        alt={title + ' thumb'}
+                        className="object-cover w-full h-full"
+                        onError={() => markGalleryImageAsFailed(idx)}
+                      />
+                    )}
                   </button>
                 ))}
               </div>

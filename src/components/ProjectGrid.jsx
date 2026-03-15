@@ -271,11 +271,11 @@ export default function ProjectGrid() {
         <div className="flex flex-col items-center text-center mb-16 space-y-4">
           <span className="section-label">Case Studies</span>
           <h2 className="text-4xl lg:text-5xl font-extrabold gradient-text">
-            What I've Built
+            Systems That Delivered Results
           </h2>
           <p className="text-slate-400 max-w-2xl text-lg leading-relaxed">
-            Each project solves a real business problem. I don't build demos —
-            I build systems that organizations rely on daily.
+            Explore real client scenarios, the problems they faced,
+            and the systems built to make their operations faster and more reliable.
           </p>
         </div>
 
