@@ -2,18 +2,6 @@ import ProjectCard from './ProjectCard'
 
 const projects = [
   {
-    id: 1,
-    title: 'Ecosystem Portal',
-    subtitle: 'Enterprise Digital Ecosystem',
-    image: '',
-    problem:
-      'The organization ran 10+ fragmented tools with zero integration — staff juggled multiple logins, data was siloed across systems, and IT spent weeks on security audits covering disconnected platforms.',
-    solution:
-      'Architected a unified portal consolidating HRIS, Payroll, CRM, Ticketing, Performance, and Workflow modules under one authentication layer. Embedded an AI Agent trained on company playbooks, reducing support turnaround from 48 hours to under 2 minutes. Deployed with Microservices and Load Balancing to sustain 500+ concurrent users.',
-    techStack: ['Laravel', 'Angular', 'AI Agents', 'Microservices', 'Load Balancing', 'MySQL', 'Docker'],
-    featured: true,
-  },
-  {
     id: 2,
     title: 'HRIS',
     subtitle: 'Human Resource Information System',
@@ -172,28 +160,16 @@ const projects = [
     featured: false,
   },
   {
-    id: 13,
-    title: 'POS System',
-    subtitle: 'Point of Sale',
-    image: '',
-    problem:
-      'Manual cashiering during peak hours caused long queues, cash counting errors, and zero real-time visibility into daily sales or inventory consumption.',
-    solution:
-      'Built a POS with fast transaction processing, inventory deduction on sale, receipt printing, multi-cashier support, daily/weekly sales dashboards, and shift close-out reports.',
-    techStack: ['Laravel', 'React', 'MySQL'],
-    featured: false,
-  },
-  {
     id: 14,
-    title: 'Food Costing System',
-    subtitle: 'Restaurant Management',
+    title: 'Zest Pro',
+    subtitle: 'POS + Food Costing System',
     image: '',
     problem:
-      'Restaurant management had no visibility into per-dish profitability. Ingredient costs were estimated, pricing was guesswork, and margin erosion was only discovered at month-end.',
+      'Restaurant operations relied on disconnected cashiering and manual costing spreadsheets. This caused long queues, pricing guesswork, inventory mismatch, and weak visibility into per-dish profit margins.',
     solution:
-      'Built a food costing engine that breaks down recipes by ingredient, tracks market price fluctuations, calculates real-time margins per dish, and flags items falling below target profitability.',
+      'Built Zest Pro as one integrated platform combining POS and food costing: fast transactions, automatic inventory deduction, recipe-level ingredient costing, real-time margin tracking, sales dashboards, and shift close-out reporting for daily operational control.',
     techStack: ['Laravel', 'React', 'MySQL'],
-    featured: false,
+    featured: true,
     gallery: [
        '/assets/images/gallery/foodcostingandpos/1.png',
       '/assets/images/gallery/foodcostingandpos/2.png',

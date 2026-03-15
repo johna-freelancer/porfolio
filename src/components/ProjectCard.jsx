@@ -1,34 +1,6 @@
 import { useRef, useState } from 'react'
 import { ExternalLink, Github, AlertCircle, Lightbulb, ArrowRight, ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 
-const BADGE_COLORS = {
-  Laravel: 'bg-red-900/40 text-red-300 border-red-700/40',
-  Angular: 'bg-red-900/40 text-red-300 border-red-700/40',
-  React: 'bg-cyan-900/40 text-cyan-300 border-cyan-700/40',
-  'AI Agent': 'bg-violet-900/40 text-violet-300 border-violet-700/40',
-  'AI Agents': 'bg-violet-900/40 text-violet-300 border-violet-700/40',
-  PHP: 'bg-indigo-900/40 text-indigo-300 border-indigo-700/40',
-  MySQL: 'bg-orange-900/40 text-orange-300 border-orange-700/40',
-  Microservices: 'bg-emerald-900/40 text-emerald-300 border-emerald-700/40',
-  'Load Balancing': 'bg-blue-900/40 text-blue-300 border-blue-700/40',
-  Docker: 'bg-sky-900/40 text-sky-300 border-sky-700/40',
-  HRIS: 'bg-slate-700/60 text-slate-300 border-slate-600/40',
-  Payroll: 'bg-slate-700/60 text-slate-300 border-slate-600/40',
-  CRM: 'bg-slate-700/60 text-slate-300 border-slate-600/40',
-  TypeScript: 'bg-blue-900/40 text-blue-300 border-blue-700/40',
-  default: 'bg-slate-700/60 text-slate-300 border-slate-600/40',
-}
-
-function TechBadge({ label }) {
-  const colorClass = BADGE_COLORS[label] || BADGE_COLORS.default
-  return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono font-medium
-                      border ${colorClass} transition-colors duration-200`}>
-      {label}
-    </span>
-  )
-}
-
 /**
  * ProjectCard — glassmorphism card with hover zoom image,
  * Problem/Solution narrative, and color-coded tech badges.
@@ -292,16 +264,6 @@ export default function ProjectCard({
           </p>
         </div>
 
-        {/* Tech stack */}
-        <div>
-          <p className="text-xs text-slate-500 uppercase tracking-wider font-mono mb-2.5">Stack</p>
-          <div className="flex flex-wrap gap-2">
-            {techStack.map((tech) => (
-              <TechBadge key={tech} label={tech} />
-            ))}
-          </div>
-        </div>
-
         {/* Actions */}
         <div className="flex items-center gap-3 pt-2 mt-auto">
           {liveUrl && (
@@ -317,13 +279,6 @@ export default function ProjectCard({
               <Github size={14} />
               Source
             </a>
-          )}
-          {!liveUrl && !githubUrl && (
-            <span className="flex items-center gap-2 text-xs text-slate-500 font-mono
-                             bg-slate-800/60 px-3 py-2 rounded-lg border border-slate-700/40">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              Internal / NDA
-            </span>
           )}
           <button className="ml-auto text-slate-600 hover:text-blue-400 transition-colors duration-200 group/arrow">
             <ArrowRight size={18} className="group-hover/arrow:translate-x-1 transition-transform duration-200" />
